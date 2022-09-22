@@ -13,6 +13,7 @@ dependencies:
     - xraylib
     - scipy
     - pillow
+    - tifffile
 #- opencv
     #- cma
     #- tomopy
