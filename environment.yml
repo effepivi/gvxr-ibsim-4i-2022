@@ -1,0 +1,49 @@
+name: gvxr-ibsim-4i-2022
+channels:
+    - conda-forge
+dependencies:
+    - python=3.10.5
+    - scikit-build
+    - jupyterlab
+    - notebook
+    - nb_conda_kernels
+    - ipympl
+    - ipywidgets
+    - matplotlib
+    - xraylib
+    - scipy
+    - pillow
+#- opencv
+    #- cma
+    #- tomopy
+    #- numpy
+    #- libtiff
+    #- pandas
+    #- ipykernel
+    #- ipython
+    #- vtk
+    #- jupyterlab
+    #- pandas
+    #- scikit-learn
+    #- scikit-image
+    #- imageio
+    #- SimpleITK
+    #- k3d
+    #- numpy-stl
+    #- gputil
+    #- plotly
+    #- jupyterlab>=3
+    #- ipywidgets>=7.6
+    #- python-kaleido
+    - ninja
+    - pip
+    - pip:
+        - xpecgen
+    #    - gatetools
+        - gvxr
+    #    - tabletext
+    #    - viewscad
+    #    - spekpy
+    #    - py-cpuinfo
+    #    - pymoo
+    #    - chart_studio
