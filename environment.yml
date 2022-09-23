@@ -22,6 +22,8 @@ dependencies:
     - tifffile
     - scikit-image
     - k3d=2.14.5
+    - pyppeteer
+    - nbconvert
 #- opencv
     #- cma
     #- tomopy
