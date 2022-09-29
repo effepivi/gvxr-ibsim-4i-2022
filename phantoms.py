@@ -173,22 +173,27 @@ if __name__ == "__main__":
 
 	# Create a plate with doga holes cutout
 	dogaPlate = plate() - DogaCircles().geometry
+	dogaPlate = scad.scale((100,100,100))(dogaPlate)
 	scad.scad_render_to_file(dogaPlate, outPath / "doga-plate.scad")
 
 	# Create free-standing spheres in a doga formation
 	dogaSpheres = DogaSpheres().geometry
+	dogaSpheres = scad.scale((100,100,100))(dogaSpheres)
 	scad.scad_render_to_file(dogaSpheres, outPath / "doga-spheres.scad")
 
 	# Create a plate with a Siemens star cutout
 	starPlate = plate() - SiemensStar(n_sectors=20,radius=0.4).geometry
+	starPlate = scad.scale((100,100,100))(starPlate)
 	scad.scad_render_to_file(starPlate, outPath / "star-plate.scad")
 
 	# Create a free-standing siemens star
 	star = plate() * SiemensStar(n_sectors=20,radius=0.4).geometry
+	star = scad.scale((100,100,100))(star)
 	scad.scad_render_to_file(star, outPath / "star.scad")
 
 	# Create free-standing random spheres
 	spheres = RandomSpheres().geometry
+	spheres = scad.scale((100,100,100))(spheres)
 	scad.scad_render_to_file(spheres, outPath / "spheres.scad")
 
 	print("Scad files created!")
