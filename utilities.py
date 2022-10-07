@@ -23,6 +23,7 @@ def GetDensity(material):
     return density
 
 def mu(material='H2C'):
+    old_font_size  = mpl.rcParams['font.size']
     energy_range = np.arange(5.,800., 0.1, dtype=np.double)
     density = GetDensity(material)
     print(f'density {material} = {density}')
@@ -65,8 +66,10 @@ def mu(material='H2C'):
         text.set_y(axMW.get_ylim()[1])
     cid = fig.canvas.mpl_connect('button_press_event', onclick)
     plt.show()
+    mpl.rcParams['font.size'] = old_font_size
 
 def spectrum(E0,Mat_Z,Mat_X):
+    old_font_size  = mpl.rcParams['font.size']
     xrs=xg.calculate_spectrum(E0,12,3,100,epsrel=0.5,monitor=None,z=74)
     #Inherent filtration: 1.2mm Al + 100cm Air
     mu_Al=xg.get_mu(13)
@@ -117,6 +120,9 @@ def spectrum(E0,Mat_Z,Mat_X):
     axMW.yaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
     axMW.grid(True)
     plt.show()
+
+    mpl.rcParams['font.size'] = old_font_size
+
 
 def recon_parallel(projections:np.ndarray, pixel_size:float,final_angle:float) -> Optional[np.ndarray]:
     """Reconstruct a parallel CT scan using FBP.
