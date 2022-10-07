@@ -1,6 +1,9 @@
 output_data/
 doc/
 
+# Generated .scad phantoms
+input_data/phantoms/*.scad
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

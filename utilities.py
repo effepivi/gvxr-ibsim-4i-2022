@@ -1,9 +1,13 @@
+from typing import Optional
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 #from tabletext import to_text
 import xraylib as xrl
 from xpecgen import xpecgen as xg
+
+from cil.recon import FBP
+from cil.framework import AcquisitionData, AcquisitionGeometry
 
 def GetDensity(material):
     if material=='H2C':
@@ -61,7 +65,7 @@ def mu(material='H2C'):
         text.set_y(axMW.get_ylim()[1])
     cid = fig.canvas.mpl_connect('button_press_event', onclick)
     plt.show()
-    
+
 def spectrum(E0,Mat_Z,Mat_X):
     xrs=xg.calculate_spectrum(E0,12,3,100,epsrel=0.5,monitor=None,z=74)
     #Inherent filtration: 1.2mm Al + 100cm Air
@@ -113,3 +117,27 @@ def spectrum(E0,Mat_Z,Mat_X):
     axMW.yaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
     axMW.grid(True)
     plt.show()
+
+def recon_parallel(projections:np.ndarray, pixel_size:float,final_angle:float) -> Optional[np.ndarray]:
+    """Reconstruct a parallel CT scan using FBP.
+
+    Args:
+        projections (np.ndarray): A set of projections. First axis is angle.
+
+    Returns:
+        np.ndarray: Reconstructed slices.
+    """
+    geo:AcquisitionGeometry = AcquisitionGeometry.create_Parallel3D()
+
+    geo.set_panel(projections.shape[1:][::-1], pixel_size)
+    angles = np.linspace(0, 1) * final_angle
+    geo.set_angles(angles)
+    geo.set_labels(["angle", "vertical", "horizontal"])
+
+    acData:AcquisitionData = geo.allocate()
+    acData.fill(projections)
+
+    print("Running FBP Reconstruction")
+    result = FBP(acData).run()
+
+    return result
