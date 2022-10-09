@@ -1,0 +1,68 @@
+{
+    "WindowSize": [800, 450],
+
+    "Detector": {
+        "Position": [0, 0, -5, "cm"],        
+        "UpVector": [0, 1, 0],
+        "NumberOfPixels": [600, 600],
+        "Spacing": [0.25, 0.25, "mm"]
+    },
+
+    "Source": {
+        "Shape": ["FocalSpot", 5.0, "mm", 3],
+        "Position": [0, 0, 20, "cm"],
+        "Beam": [
+            {
+                "Energy": 100,
+                "Unit": "keV",
+                "PhotonCount": 1
+            }
+        ]
+    },
+        
+    "Samples": [
+        {
+            "Label": "Matrix",
+            "Path": "../input_data/phantoms/plate_sphere_inserts/matrix.stl",
+            "Unit": "mm",
+            "Material": ["Element", "C"]
+        },
+
+        {
+            "Label": "Col_0",
+            "Path": "../input_data/phantoms/plate_sphere_inserts/col_0.stl",
+            "Unit": "mm",
+            "Material": ["Element", "Cu"]
+        },
+
+        {
+            "Label": "Col_1",
+            "Path": "../input_data/phantoms/plate_sphere_inserts/col_1.stl",
+            "Unit": "mm",
+            "Material": ["Element", "Al"]
+        },
+
+        {
+            "Label": "Col_2",
+            "Path": "../input_data/phantoms/plate_sphere_inserts/col_2.stl",
+            "Unit": "mm",
+            "Material": ["Compound", "SiC"],
+            "Density": 3.2
+        },
+
+        {
+            "Label": "Col_3",
+            "Path": "../input_data/phantoms/plate_sphere_inserts/col_3.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", "Ti90Al6V4"],
+            "Density": 4.42
+        },
+
+        {
+            "Label": "Col_0",
+            "Path": "../input_data/phantoms/plate_sphere_inserts/col_4.stl",
+            "Unit": "mm",
+            "Material": ["Element", "Fe"]
+        }
+    ]
+}
