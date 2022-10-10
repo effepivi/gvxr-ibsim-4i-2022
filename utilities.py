@@ -6,9 +6,13 @@ import matplotlib as mpl
 import xraylib as xrl
 from xpecgen import xpecgen as xg
 
-from cil.recon import FBP
-from cil.framework import AcquisitionData, AcquisitionGeometry
-
+has_cil = True
+try:
+    from cil.recon import FBP
+    from cil.framework import AcquisitionData, AcquisitionGeometry
+except:
+    has_cil = False
+    
 def GetDensity(material):
     if material=='H2C':
         cpH2C = xrl.GetCompoundDataNISTByName('Polyethylene')
@@ -133,17 +137,21 @@ def recon_parallel(projections:np.ndarray, pixel_size:float,final_angle:float) -
     Returns:
         np.ndarray: Reconstructed slices.
     """
-    geo:AcquisitionGeometry = AcquisitionGeometry.create_Parallel3D()
+    
+    result = None
+    
+    if has_cil:
+        geo:AcquisitionGeometry = AcquisitionGeometry.create_Parallel3D()
 
-    geo.set_panel(projections.shape[1:][::-1], pixel_size)
-    angles = np.linspace(0, 1) * final_angle
-    geo.set_angles(angles)
-    geo.set_labels(["angle", "vertical", "horizontal"])
+        geo.set_panel(projections.shape[1:][::-1], pixel_size)
+        angles = np.linspace(0, 1) * final_angle
+        geo.set_angles(angles)
+        geo.set_labels(["angle", "vertical", "horizontal"])
 
-    acData:AcquisitionData = geo.allocate()
-    acData.fill(projections)
+        acData:AcquisitionData = geo.allocate()
+        acData.fill(projections)
 
-    print("Running FBP Reconstruction")
-    result = FBP(acData).run()
+        print("Running FBP Reconstruction")
+        result = FBP(acData).run()
 
     return result
