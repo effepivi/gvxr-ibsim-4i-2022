@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Tuple
+from typing import Tuple, cast
 import numpy as np
 import solid as scad
 import os
@@ -58,7 +58,7 @@ def dogaPoints(n_sizes=8, size_ratio=0.5, n_shuffles=8) -> Tuple[np.ndarray, np.
 class DogaSpheres(Phantom):
 	def __init__(self, n_sizes=5, size_ratio=0.5, n_shuffles=5, res=20):
 		radii, _x, _y = dogaPoints(n_sizes, size_ratio, n_shuffles)
-
+		print(radii)
 		geo = None
 		for (k, x, y) in zip(radii.flatten(), _x.flatten(), _y.flatten()):
 			if geo is None:
@@ -72,6 +72,30 @@ class DogaSpheres(Phantom):
 		self.x = _x
 		self.y = _y
 		self.geometry = scad.translate((-0.5, -0.5, 0))(geo)
+
+class RandomMatSpheres(DogaSpheres):
+	def __init__(self, size=1, n_sizes=5, size_ratio=0.5, n_shuffles=5, res=20):
+		radii, _x, _y = dogaPoints(n_sizes, size_ratio, n_shuffles)
+		rads = np.unique(radii)
+
+		spheres = []
+		for i in range(0, rads.shape[0]):
+			spheres.append(None)
+
+		for (k, x, y) in zip(radii.flatten(), _x.flatten(), _y.flatten()):
+			i = int(np.where(rads == k)[0])
+			if spheres[i] is None:
+				spheres[i] = scad.translate((x, y, 0))(scad.sphere(k,segments=res))
+			else:
+				spheres[i] += scad.translate((x, y, 0))(scad.sphere(k,segments=res))
+
+		for i, sphere in enumerate(spheres):
+			spheres[i] = scad.translate((-0.5, -0.5, 0))(sphere)
+
+		self.spheres = spheres
+		self.radii = radii
+		self.x = _x
+		self.y = _y
 
 class DogaCircles(Phantom):
 	def __init__(self, n_sizes=5, size_ratio=0.5, n_shuffles=5,res=20):
@@ -126,6 +150,7 @@ if __name__ == "__main__":
 
 	outPath = Path("input_data/phantoms/")
 	os.makedirs(outPath, exist_ok=True)
+	os.makedirs(outPath / "spheres/", exist_ok=True)
 
 	# Create a plate with doga holes cutout
 	dogaPlate = plate() - DogaCircles().geometry
@@ -136,6 +161,12 @@ if __name__ == "__main__":
 	dogaSpheres = DogaSpheres().geometry
 	dogaSpheres = scad.scale((100,100,100))(dogaSpheres)
 	scad.scad_render_to_file(dogaSpheres, outPath / "doga-spheres.scad")
+
+	# Create free-standing spheres split by materials in a doga formation
+	matSpheres = RandomMatSpheres()
+	for i, spheres in enumerate(matSpheres.spheres):
+		spheres = scad.scale((100,100,100))(spheres)
+		scad.scad_render_to_file(spheres, outPath / f"spheres/spheres-{i}.scad")
 
 	# Create a plate with a Siemens star cutout
 	starPlate = plate() - SiemensStar(n_sectors=20,radius=0.4).geometry
@@ -163,5 +194,5 @@ if __name__ == "__main__":
 		for i in files:
 			run(f"openscad -i {i} {i.with_suffix('.stl')}")
 	except FileNotFoundError as e:
-		print(f"Failed to convert scad files to .stl: {e}")
-		print("You will need to use openscad to convert the files manually.")
+		print(f"! Failed to convert scad files to .stl: {e}")
+		print("! You will need to use openscad to convert the files manually.")
