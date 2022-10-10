@@ -27,6 +27,7 @@ dependencies:
     - pyppeteer
     - nbconvert
     - cil
+    - tigre
 #- opencv
     #- cma
     #- tomopy
