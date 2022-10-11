@@ -25,8 +25,7 @@
             "Label": "Dragon",
             "Path": "../input_data/welsh-dragon-small.stl",
             "Unit": "mm",
-            "Material": ["Mixture", "Ti90Al6V4"],
-            "Density": 4.42,
+            "Material": ["Element", "Ti"],
             "Transform": [
                 ["Rotation", 90, 0, 0, 1]
             ]
