@@ -3,6 +3,7 @@ doc/
 
 # Generated .scad phantoms
 input_data/phantoms/*.scad
+input_data/phantoms/spheres/*.scad
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
