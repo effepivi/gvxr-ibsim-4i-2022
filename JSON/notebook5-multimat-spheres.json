@@ -2,7 +2,7 @@
     "WindowSize": [800, 450],
 
     "Source": {
-        "Position": [0, -40, 0, "cm"],
+        "Position": [0, -10, 0, "cm"],
         "Shape": "Parallel",
         "Beam": [
             {
@@ -45,8 +45,8 @@
             "Label": "sphere2",
             "Path": "input_data/phantoms/spheres/spheres-2.stl",
             "Unit": "mm",
-            "Material": ["Element", "Al"],
-            "Density": 2.7,
+            "Material": ["Element", "C"],
+            "Density": 2.1,
             "Transform": [
                 ["Rotation", 90, 1, 0, 0]
             ]
