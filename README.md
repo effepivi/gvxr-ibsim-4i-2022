@@ -31,6 +31,7 @@
         - Cone-beam (X-ray tube)
         - Focal spot
         - Polychromatic spectrum
+    - Preview: watch out for new release with photonic noise model
     - [Notebook 5](05-detector_parameters.ipynb)
         - Pixel size, magnification
         - Point spread function
@@ -41,10 +42,8 @@
         - Cone beam
         - Monochromatic spectrum
         - Polychromatic spectrum
-        - Noiseless
-        - Photonic noise
     - [Notebook 7](07-2D_registration_Xray_radiograph.ipynb)
-    - [Notebook 8](08-3D_registration_Xray_CT.ipynb)
+<!--     - [Notebook 8](08-3D_registration_Xray_CT.ipynb) -->
 <!--
 
 
