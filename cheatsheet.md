@@ -221,18 +221,54 @@ saveLastXRayImage(aFileName, useCompression=True)
 
 
 ```
-setWindowBackGroundColour(r, g, b)
+setWindowBackGroundColour(R, G, B, aWindowID=-1)
+    Set the background colour of a given window
+
+    Parameters
+    ----------
+    * `R` :  
+        red colour. A number between 0 and 1.
+    * `G` :  
+        green colour. A number between 0 and 1.
+    * `B` :  
+        red colour. A number between 0 and 1.
+    * `aWindowID` :  
+        The window's numerical ID (default: -1, means
+        that the active context will be used)
 ```
 
 
 ```
-takeScreenshot()
+takeScreenshot(aWindowID=-1)
+    Take a screenshot of a given window.
+    
+    Parameters
+    ----------
+    * `aWindowID` :  
+        The window's numerical ID (default: -1, means
+        that the active context will be used)
 ```
 
 
 
 ```
-renderLoop()
+renderLoop(aWindowID=-1)
+    3-D visualisation of the 3-D scene (source, detector, and scanned objects). Note
+    that there is interactive loop running. Keys are:  
+    
+    *   Q/Escape: to quit the event loop (does not close the window)  
+    *   B: display/hide the X-ray beam  
+    *   W: display the polygon meshes in solid or wireframe  
+    *   N: display the X-ray image in negative or positive  
+    *   L: switch lighting on/off  
+    *   D: display/hide the X-ray detector  
+    *   V: display/hide normal vectors  
+    
+    Parameters:  
+    ----------
+    * `aWindowID` :  
+        the numerical ID of the corresponding context (default value: -1, means
+        that the active context will be used)
 ```
 
 
