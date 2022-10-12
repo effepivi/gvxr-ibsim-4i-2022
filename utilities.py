@@ -5,14 +5,16 @@ import matplotlib as mpl
 #from tabletext import to_text
 import xraylib as xrl
 from xpecgen import xpecgen as xg
+import ipywidgets as widgets
 
 has_cil = True
 try:
-    from cil.recon import FBP
-    from cil.framework import AcquisitionData, AcquisitionGeometry
+    from cil.framework import AcquisitionData, AcquisitionGeometry, ImageData
+    from cil.recon import FBP, FDK
+    from cil.utilities.display import show_geometry
 except:
     has_cil = False
-    
+
 def GetDensity(material):
     if material=='H2C':
         cpH2C = xrl.GetCompoundDataNISTByName('Polyethylene')
@@ -128,7 +130,7 @@ def spectrum(E0,Mat_Z,Mat_X):
     mpl.rcParams['font.size'] = old_font_size
 
 
-def recon_parallel(projections:np.ndarray, pixel_size:float,final_angle:float) -> Optional[np.ndarray]:
+def recon_parallel(projections:np.ndarray, pixel_size:float, final_angle:float) -> Optional[np.ndarray]:
     """Reconstruct a parallel CT scan using FBP.
 
     Args:
@@ -137,14 +139,15 @@ def recon_parallel(projections:np.ndarray, pixel_size:float,final_angle:float) -
     Returns:
         np.ndarray: Reconstructed slices.
     """
-    
+
     result = None
-    
+
+    print(f"Has CIL: {'YES' if has_cil else 'NO'}")
     if has_cil:
         geo:AcquisitionGeometry = AcquisitionGeometry.create_Parallel3D()
 
         geo.set_panel(projections.shape[1:][::-1], pixel_size)
-        angles = np.linspace(0, 1) * final_angle
+        angles = np.linspace(0, 1, projections.shape[0]) * final_angle
         geo.set_angles(angles)
         geo.set_labels(["angle", "vertical", "horizontal"])
 
@@ -152,6 +155,115 @@ def recon_parallel(projections:np.ndarray, pixel_size:float,final_angle:float) -
         acData.fill(projections)
 
         print("Running FBP Reconstruction")
-        result = FBP(acData).run()
+        result:ImageData|None = FBP(acData, geo.get_ImageGeometry()).run()
+
+        show_geometry(acData.geometry)
+        plt.show()
+
+        assert result is not None
+        return result.as_array()
 
     return result
+
+def recon_cone(projections:np.ndarray, pixel_size:float, final_angle:float, detector_pos:np.ndarray|list|tuple, source_pos:np.ndarray|list|tuple) -> Optional[np.ndarray]:
+    """Reconstruct a cone-beam CT scan using FDK.
+
+    Args:
+        projections (np.ndarray): A set of projections. First axis is angle.
+
+    Returns:
+        np.ndarray: Reconstructed slices.
+    """
+
+    result = None
+
+    print(f"Has CIL: {'YES' if has_cil else 'NO'}")
+    if has_cil:
+        geo:AcquisitionGeometry = AcquisitionGeometry.create_Cone3D(source_pos, detector_pos)
+
+        geo.set_panel(projections.shape[1:][::-1], pixel_size)
+        angles = np.linspace(0, 1, projections.shape[0]) * final_angle
+        geo.set_angles(angles)
+        geo.set_labels(["angle", "vertical", "horizontal"])
+
+        acData:AcquisitionData = geo.allocate()
+        acData.fill(projections)
+
+        print("Running FBP Reconstruction")
+        result:ImageData|None = FDK(acData, geo.get_ImageGeometry()).run()
+
+        show_geometry(acData.geometry)
+        plt.show()
+
+        assert result is not None
+        return result.as_array()
+
+    return result
+
+def recon_widget(projections, recon):
+    # Quick Interactive projection and reconstruction viewer
+
+    # Widgets
+    sliderProj = widgets.IntSlider(
+        value=0,
+        min=0,
+        max=projections.shape[0]-1,
+        description="Projection",
+        readout=True)
+
+    sliderRecon = widgets.IntSlider(
+        value=recon.shape[0]//2,
+        min=0,
+        max=recon.shape[0]-1,
+        description="Reconstruction",
+        readout=True)
+
+    sliderReconHist = widgets.FloatRangeSlider(
+        value=[recon.min(),recon.max()],
+        min=recon.min(),
+        max=recon.max(),
+        step=(recon.max() - recon.min()) / 100,
+        description="Colour Range",
+        readout=True)
+
+    sliderProjHist = widgets.FloatRangeSlider(
+        value=[projections.min(),projections.max()],
+        min=projections.min(),
+        max=projections.max(),
+        step=(projections.max() - projections.min()) / 100,
+        description="Colour Range",
+        readout=True)
+
+    outputProj = widgets.Output(layout=widgets.Layout(height='200px'))
+    outputRecon = widgets.Output(layout=widgets.Layout(height='500px'))
+
+    def display_projection(change:dict):
+        projection = sliderProj.value
+        vmax,vmin = sliderProjHist.value
+        with outputProj:
+            outputProj.clear_output(wait=True)
+            # Display
+            m = plt.imshow(projections[projection],cmap="gray",vmax=vmax, vmin=vmin)
+            plt.colorbar(m)
+            plt.title("Virtual Scan Radiographs (Raw)")
+            plt.show()
+
+    def display_reconstruction(change:dict):
+        slice = sliderRecon.value
+        vmax,vmin = sliderReconHist.value
+        with outputRecon:
+            outputRecon.clear_output(wait=True)
+            # Display
+            m = plt.imshow(recon[slice],vmax=vmax, vmin=vmin)
+            plt.colorbar(m)
+            plt.title("Reconstruction")
+            plt.show()
+
+    sliderProj.observe(display_projection)
+    sliderRecon.observe(display_reconstruction)
+    sliderReconHist.observe(display_reconstruction)
+    sliderProjHist.observe(display_projection)
+
+    display_projection({})
+    display_reconstruction({})
+    return widgets.HBox((widgets.VBox((sliderProjHist,sliderProj, outputProj)),widgets.VBox((sliderReconHist,sliderRecon, outputRecon))))
