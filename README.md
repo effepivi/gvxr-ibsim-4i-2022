@@ -31,9 +31,10 @@
         - Cone-beam (X-ray tube)
         - Focal spot
         - Polychromatic spectrum
+        - Pixel size, magnification
     - Preview: watch out for new release with photonic noise model
     - [Notebook 5](05-detector_parameters.ipynb)
-        - Pixel size, magnification
+        - Pixel size (revisited)
         - Point spread function
         - Energy response of the detector
 - Session 4
