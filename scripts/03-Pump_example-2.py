@@ -30,14 +30,14 @@ opengl_minor_version = 5
 
 gvxr.createOpenGLContext(window_id, opengl_major_version, opengl_minor_version)
 
-gvxr.setSourcePosition(0.0 ,-40.0,0.0,"cm")
+gvxr.setSourcePosition(0.0 ,-20.0,0.0,"cm")
 gvxr.usePointSource()
 gvxr.setMonoChromatic(0.5,"MeV",1000)
 #gvxr.setMonoChromatic(0.8,"MeV",1000)
 #gvxr.setDetectorNumberOfPixels(720,576)
 gvxr.setDetectorNumberOfPixels(800,800)
-gvxr.setDetectorPixelSize(0.7,0.7,"mm")
-gvxr.setDetectorPosition(0.0,30.0,0.0,"cm")
+gvxr.setDetectorPixelSize(0.2,0.2,"mm")
+gvxr.setDetectorPosition(0.0,15.0,0.0,"cm")
 gvxr.setDetectorUpVector(0,0,-1)
 
 parts_list = ["internals","front_flange","rear_flange","housing","roller_bearing"]
@@ -58,17 +58,11 @@ materials = ["Ti","Al","Al","Fe","Ti"]
 for i,name in enumerate(parts_list):
      gvxr.loadMeshFile(name,part_files[i],"mm")
      gvxr.setElement(name, materials[i])
-     #gvxr.moveToCentre()
-     gvxr.translateNode(name,-1.0,-13.0,-2.5,"cm")
-     gvxr.scaleNode(name, 0.5, 0.5, 0.5)
+     gvxr.scaleNode(name, 0.20, 0.20, 0.20)
      gvxr.rotateNode(name, -90, 1,0,0)
-#gvxr.moveToCentre()
 gvxr.displayScene()
 
-# gvxr.setMixture(parts_list[4],elements,ammounts)
-# gvxr.setDensity(parts_list[4], 8.0, "g/cm3")
 
-#projections = [];
 theta = [];
 num_projections = 721
 angular_step = 360/num_projections
@@ -78,6 +72,7 @@ imwrite('output_data/pump_scan/03-Pump_0.tiff',xray_image)
 # Update the 3D visualisation
 gvxr.displayScene();
 theta.append(0.0);
+gvxr.renderLoop()
 for i in range(1,num_projections):
  #    Rotate the model by angular_step degrees
      for n,label in enumerate(parts_list):
@@ -88,7 +83,7 @@ for i in range(1,num_projections):
      xray_image = np.array(gvxr.computeXRayImage()).astype(np.single)
      imwrite(f'output_data/pump_scan/03-Pump_{i}.tiff',xray_image)
      theta.append(i * angular_step * math.pi / 180);
-# file = open("GVXR_angles.txt", "w")
-# file.write(f"angles = {theta} \n")
-# file.close()
+file = open("GVXR_angles.txt", "w")
+file.write(f"angles = {theta} \n")
+file.close()
 gvxr.terminate()

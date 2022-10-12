@@ -1,6 +1,9 @@
 output_data/
 doc/
 
+# turbopump scan files
+**/scan/*.tiff
+
 # Generated .scad phantoms
 input_data/phantoms/*.scad
 input_data/phantoms/spheres/*.scad
