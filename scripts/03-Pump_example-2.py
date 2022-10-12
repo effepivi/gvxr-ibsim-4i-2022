@@ -86,9 +86,8 @@ for i in range(1,num_projections):
           xray_image = np.array(gvxr.computeXRayImage()).astype(np.single)
           # Update the 3D visualisation
           gvxr.displayScene();
-          theta.append(i * angular_step * math.pi / 180);
-          imwrite(f'output_data/pump_scan/03-Pump_{i}.tiff',xray_image)
-
+     imwrite(f'output_data/pump_scan/03-Pump_{i}.tiff',xray_image)
+     theta.append(i * angular_step * math.pi / 180);
 # file = open("GVXR_angles.txt", "w")
 # file.write(f"angles = {theta} \n")
 # file.close()
