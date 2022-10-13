@@ -10,6 +10,7 @@ import ipywidgets as widgets
 has_cil = True
 try:
     from cil.framework import AcquisitionData, AcquisitionGeometry, ImageData
+    from cil.processors import TransmissionAbsorptionConverter
     from cil.recon import FBP, FDK
     from cil.utilities.display import show_geometry
 except:
@@ -152,7 +153,9 @@ def recon_parallel(projections:np.ndarray, pixel_size:float, final_angle:float) 
         geo.set_labels(["angle", "vertical", "horizontal"])
 
         acData:AcquisitionData = geo.allocate()
-        acData.fill(projections)
+
+        acData.fill(projections.squeeze())
+        acData = TransmissionAbsorptionConverter(min_intensity=0.0001)(acData)
 
         print("Running FBP Reconstruction")
         result:ImageData|None = FBP(acData, geo.get_ImageGeometry()).run()
@@ -187,7 +190,8 @@ def recon_cone(projections:np.ndarray, pixel_size:float, final_angle:float, dete
         geo.set_labels(["angle", "vertical", "horizontal"])
 
         acData:AcquisitionData = geo.allocate()
-        acData.fill(projections)
+        acData.fill(projections.squeeze())
+        acData = TransmissionAbsorptionConverter(min_intensity=0.0001)(acData)
 
         print("Running FBP Reconstruction")
         result:ImageData|None = FDK(acData, geo.get_ImageGeometry()).run()

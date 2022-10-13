@@ -1,5 +1,7 @@
 # [gVirtualXray](https://gvirtualxray.sourceforge.io/) user training day at [IBSim-4i](https://ibsim.co.uk/events/ibsim-4i/) 2022
 
+![](./img/repository-open-graph.png)
+
 - Session 1
     - [Notebook 0](00-warming-up.ipynb) -- Warming up
         - Log in;
@@ -26,24 +28,24 @@
         - Mixtures
         - Compounds
 - Session 3
-    - [Notebook 4](04-source_parameters.ipynb)
+    - [Notebook 4](04-source_parameters.ipynb) -- Source types and paramaters
         - Parallel beam (synchrotron)
         - Cone-beam (X-ray tube)
         - Focal spot
         - Polychromatic spectrum
         - Pixel size, magnification
     - Preview: watch out for new release with photonic noise model
-    - [Notebook 5](05-detector_parameters.ipynb)
+    - [Notebook 5](05-detector_parameters.ipynb) -- Detector paramaters
         - Pixel size (revisited)
         - Point spread function
         - Energy response of the detector
 - Session 4
-    - [Notebook 6](06-CT_acquisition.ipynb)
+    - [Notebook 6](06-CT_acquisition.ipynb) -- Simulating CT scans
         - Parallel beam
         - Cone beam
         - Monochromatic spectrum
         - Polychromatic spectrum
-    - [Notebook 7](07-2D_registration_Xray_radiograph.ipynb)
+    - [Notebook 7](07-2D_registration_Xray_radiograph.ipynb) -- Using simulations for image registration
 <!--     - [Notebook 8](08-3D_registration_Xray_CT.ipynb) -->
 <!--
 
@@ -52,7 +54,7 @@
 - 13:30 – Session 3 (1 hour 15 minutes)
     - gVXR: More advanced simulations
             - Polychromatic spectrum  (faut parler de l'influence des kV et mA, de l'utilisation de filtres et du type d'anode (W, Mo, Cu...).)  Pour le 5 et 8, il serait bien de montrer à exposition constante (mAs) l'influence de la taille du pixel.
-            - Photonic noise    
+            - Photonic noise
 - 14:45 – Coffee
 - 15:15 – Session 4 (1 hour 45 minutes)
     - gVXR: Simulation of tomography acquisition
