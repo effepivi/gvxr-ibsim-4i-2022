@@ -76,7 +76,7 @@
     "Samples": [
         {
             "Label": "matrix",
-            "Path": "input_data/fibres/final_Ti90Al6V4_matrix.stl",
+            "Path": "../input_data/fibres/final_Ti90Al6V4_matrix.stl",
             "Unit": "mm",
             "Material": ["Mixture", "Ti90Al6V4"],
             "Density": 4.42,
@@ -87,7 +87,7 @@
         },
         {
             "Label": "fibres",
-            "Path": "input_data/fibres/final_SiC_fibres.stl",
+            "Path": "../input_data/fibres/final_SiC_fibres.stl",
             "Unit": "mm",
             "Material": ["Compound", "SiC"],
             "Density": 3.2,
@@ -98,7 +98,7 @@
         },
         {
             "Label": "cores",
-            "Path": "input_data/fibres/final_W_cores.stl",
+            "Path": "../input_data/fibres/final_W_cores.stl",
             "Unit": "mm",
             "Material": ["Element", "Pb"],
             "Transform": [
