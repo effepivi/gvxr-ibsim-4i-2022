@@ -1,16 +1,16 @@
 {
-    "WindowSize": [800, 450],
+    "WindowSize": [450, 450],
 
     "Source": {
         "Position": [0, 600, 0, "mm"],
         "Shape": "Point",
-        "Beam": {
-            "kvp": 350,
-            "tube angle": 12,
-            "filters": [
-                ["Cu", 10]
-            ]
-        }
+        "Beam": [
+            {
+                "Energy": 350,
+                "Unit": "keV",
+                "PhotonCount": 1000
+            }
+        ]
     },
 
     "Detector": {
