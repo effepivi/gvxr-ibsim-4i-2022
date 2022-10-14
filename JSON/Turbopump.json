@@ -1,5 +1,5 @@
 {
-    "WindowSize": [800, 450],
+    "WindowSize": [450, 450],
 
     "Source": {
         "Position": [0, 200, 0, "mm"],
@@ -23,7 +23,7 @@
     "Samples": [
         {
             "Label": "internals",
-            "Path": "input_data/TurboPump/internals.stl",
+            "Path": "../input_data/TurboPump/internals.stl",
             "Unit": "mm",
             "Material": ["Element", "Ti"],
             "Density": 4.506,
@@ -34,7 +34,7 @@
         },
         {
             "Label": "front_flange",
-            "Path": "input_data/TurboPump/front_flange.stl",
+            "Path": "../input_data/TurboPump/front_flange.stl",
             "Unit": "mm",
             "Material": ["Element", "Al"],
             "Density": 2.7,
@@ -46,7 +46,7 @@
         },
         {
             "Label": "rear_flage",
-            "Path": "input_data/TurboPump/rear_flange.stl",
+            "Path": "../input_data/TurboPump/rear_flange.stl",
             "Unit": "mm",
             "Material": ["Element", "Al"],
             "Density": 2.7,
@@ -57,7 +57,7 @@
         },
         {
             "Label": "housing",
-            "Path": "input_data/TurboPump/housing.stl",
+            "Path": "../input_data/TurboPump/housing.stl",
             "Unit": "mm",
             "Material": ["Element", "Fe"],
             "Density": 7.874,
@@ -68,7 +68,7 @@
         },
         {
             "Label": "roller_bearing",
-            "Path": "input_data/TurboPump/ThrustRollerBearing.stl",
+            "Path": "../input_data/TurboPump/ThrustRollerBearing.stl",
             "Unit": "mm",
             "Material": ["Element", "Ti"],
             "Density": 4.506,
