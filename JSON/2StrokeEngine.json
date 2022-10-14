@@ -1,0 +1,103 @@
+{
+    "WindowSize": [800, 450],
+
+    "Source": {
+        "Position": [0, 600, 0, "mm"],
+        "Shape": "Point",
+        "Beam": {
+            "kvp": 350,
+            "tube angle": 12,
+            "filters": [
+                ["Cu", 10]
+            ]
+        }
+    },
+
+    "Detector": {
+        "Position": [0, -150, 0, "mm"],
+        "UpVector": [0, 0, 1],
+        "NumberOfPixels": [900, 900],
+        "Spacing": [0.5, 0.5, "mm"]
+    },
+    
+    "Samples": [
+        {
+            "Label": "BottomRod",
+            "Path": "../input_data/2StrokeEngine/BottomRod.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                14, 0.121,
+                25, 0.3042,
+                6,  0.057,
+                13, 0.0257,
+                15, 0.0144,
+                26, 0.4777
+                ]
+            ],
+            "Density": 7.84
+        },
+        {
+            "Label": "ConnectingRod",
+            "Path": "../input_data/2StrokeEngine/ConnectingRod.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                14, 0.121,
+                25, 0.3042,
+                6,  0.057,
+                13, 0.0257,
+                15, 0.0144,
+                26, 0.4777
+                ]
+            ],
+            "Density": 7.84
+        },
+        {
+            "Label": "CrankShaft",
+            "Path": "../input_data/2StrokeEngine/CrankShaft.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                14, 0.121,
+                25, 0.3042,
+                6,  0.057,
+                13, 0.0257,
+                15, 0.0144,
+                26, 0.4777
+                ]
+            ],
+            "Density": 7.84
+        },
+        {
+            "Label": "Piston",
+            "Path": "../input_data/2StrokeEngine/Piston.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                    13, 0.01,
+                    14, 0.0165
+                ]
+            ],
+            "Density": 2.7
+        },
+        {
+            "Label": "WristPin",
+            "Path": "../input_data/2StrokeEngine/WristPin.stl",
+            "Unit": "mm",
+            "Material": ["Mixture", [
+                    6, 0.0065,
+                    25, 0.01,
+                    24, 0.009,
+                    26, 0.9745
+                ]
+            ],
+            "Density": 7.75
+        }
+    ],
+
+    "Scan": {
+        "NumberOfProjections":721,
+        "FinalAngle": 360,
+        "IncludeFinalAngle": false,
+        "CenterOfRotation": [0,0,0],
+        "OutFolder": "../input_data/2StrokeEngine/scan/projections",
+        "GifPath": "../input_data/2StrokeEngine/scan/preview.gif"
+    }
+}
